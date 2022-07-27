@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>Home</title>
+    <script src="../public/js/home.js"></script>
+    <script>
+      let id = "";
+    </script>
+  </head>
+
+  <body>
+    <form method="POST" action="/problems/">
+      <h1>Author</h1>
+      <select multiple id="author" name="author">
+        <% authorTags.forEach(function(tagObj) { %>
+        <option><%= tagObj.tag %></option>
+        <% }) %>
+      </select>
+
+      <h1>Concepts</h1>
+      <select multiple id="concept" name="concept">
+        <% actualTags.forEach(function(tagObj) { %>
+        <option><%= tagObj.tag %></option>
+        <% }) %>
+      </select>
+
+      <% if(userDefinedTags ) { %>
+      <h1>UserDefinedTags</h1>
+      <select multiple id="userDefined" name="userDefined">
+        <% userDefinedTags.forEach(function(tag) { %>
+        <option><%= tag %></option>
+        <% }) %>
+      </select>
+      <% } %> <% if( userId!==null && userId.length !== 0) { %>
+
+      <a href="/problems/problem/<%= userId %>">Create new question</a>
+      <% } %>
+
+      <input type="hidden" id="tok" name="tokenValue" />
+
+      <h1 id="title"></h1>
+      <button type="submit">Submit</button>
+    </form>
+
+    <input
+      type="text"
+      name="search"
+      id="searchText"
+      onkeyup="searchHandler()"
+    />
+
+    <script>
+      let info = JSON.parse(localStorage.getItem("info"));
+      if (info) {
+        console.log(info.token);
+        document.getElementById("tok").value = info.token;
+      }
+    </script>
+
+    <% if(token) { %>
+    <script>
+      token = <%- JSON.stringify(token) %>
+      let username = <%- JSON.stringify(username) %>
+      localStorage.setItem('info',JSON.stringify({
+          'token' : token,
+          'username': username
+      }))
+    </script>
+
+    <% } %>
+  </body>
+</html>

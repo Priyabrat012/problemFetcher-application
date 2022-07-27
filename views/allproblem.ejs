@@ -1,0 +1,16 @@
+<% data.forEach(function(problem){ %>
+<h2><%= problem.problemName %></h2>
+<%= problem.body %>
+<form method="POST" action="/problems/addNewTag/<%= problem._id %>">
+  <input type="text" name="newTag" />
+  <input type="submit" />
+</form>
+
+<% if(locals.idd) { %>
+<a href="/home/userDefinedTags/<%= problem._id %>/<%= locals.idd%>"
+  >Show user tags</a
+>
+
+<% }%> <% }) %>
+
+<!-- Tags -->
